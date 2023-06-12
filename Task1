@@ -1,0 +1,11 @@
+/*Return the total services paid, average services paid, and number of patients by each state for Medicaid patients. Medicaid patients are Medicaid approved. Sort by the state from A to Z. */
+
+SELECT P.State,
+sum(V.Amount) as 'Total_Services_Paid',
+avg(V.Amount) as 'Average_Services_Paid',
+count(P.Patient_Identification_No) as 'Patient_Count'
+FROM Vendor_Services_Provided V join Patient_Demographics P on V.Patient_ID_No=P.Patient_Identification_No
+join Medicaid_Status M on M.Patient_Number=P.Patient_Identification_No
+where M.Status = 'Approved'
+group by P.State
+order by P.State asc
